@@ -4,25 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
-        
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+
         question.addEventListener('click', () => {
-            // Close all other open items
+            const isOpen = !answer.classList.contains('max-h-0');
+
+            // Close all items
             faqItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                }
+                const otherAnswer = otherItem.querySelector('.faq-answer');
+                const otherIcon = otherItem.querySelector('.faq-icon');
+                otherAnswer.classList.add('max-h-0');
+                otherIcon.classList.remove('rotate-180');
             });
 
-            // Toggle current item
-            item.classList.toggle('active');
+            // If it wasn't open, open it
+            if (!isOpen) {
+                answer.classList.remove('max-h-0');
+                answer.classList.add('max-h-[200px]');
+                icon.classList.add('rotate-180');
+            }
         });
     });
 
     // Animate progress bar slightly on load
     setTimeout(() => {
-        const progressBar = document.querySelector('.progress-bar-fill');
+        const progressBar = document.querySelector('.progress-fill');
         if (progressBar) {
-            progressBar.style.width = '20%'; // Make sure it transitions to 20%
+            progressBar.style.width = '20%';
         }
-    }, 500);
+    }, 100);
 });
